@@ -33,7 +33,7 @@ const ListBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
   };
 
   useEffect(() => {
-    getBudgets();
+    setTimeout(() => getBudgets(), 1000);
     navigation.addListener('focus', getBudgets);
     return () => {
       setBudgets([]);

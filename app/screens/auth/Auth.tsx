@@ -1,4 +1,4 @@
-import { NavigationProp } from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {SafeAreaView, Alert, ActivityIndicator} from 'react-native';
 import {

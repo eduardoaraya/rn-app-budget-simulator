@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {createContext, useState, useContext, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import {interceptorUnauthorized, setClientToken} from '../services/api';
 import AuthService, {AuthData} from '../services/AuthService';
+import {UserType} from '../shared/UserType';
+import jwt_decode from 'jwt-decode';
 
 export const AUTH_STORAGE = '@AuthData';
+export const USER_STORAGE = '@UserData';
 
 type AuthContextData = {
   authData?: AuthData;
@@ -14,7 +18,7 @@ type AuthContextData = {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const AuthProvider: React.FC = ({children}) => {
+const AuthProvider = ({children}) => {
   const [authData, setAuthData] = useState<string | undefined>();
   const [loading, setLoading] = useState(true);
 
@@ -52,8 +56,10 @@ const AuthProvider: React.FC = ({children}) => {
   }) => {
     const token = await AuthService(email, password);
     if (token) {
-      setAuthData(token);
+      const data = jwt_decode<UserType>(token);
       await AsyncStorage.setItem(AUTH_STORAGE, token);
+      await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(data));
+      setAuthData(token);
       setClientToken(token);
     }
   };
