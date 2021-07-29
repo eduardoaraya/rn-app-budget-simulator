@@ -19,7 +19,7 @@ export const interceptorUnauthorized = async (handle: Function) =>
       if (error.response?.status === STATUS_UNAUTHORIZED) {
         await handle();
       }
-      return error;
+      return Promise.reject(error);
     },
   );
 

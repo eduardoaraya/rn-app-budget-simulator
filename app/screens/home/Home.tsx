@@ -12,7 +12,6 @@ const Home = () => {
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
-  // return <ListBudget navigation={navigation} />;
 };
 
 export default Home;

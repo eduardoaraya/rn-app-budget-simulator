@@ -4,6 +4,6 @@ export default {
   primaryColor: '#00456D',
   secundaryColor: '#DDD',
   hightLight: '#FFF',
-  dangerColor: '#FEB06A',
+  dangerColor: '#a30606',
   successColor: '#00456D',
 };

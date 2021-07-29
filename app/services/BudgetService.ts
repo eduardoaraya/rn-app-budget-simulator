@@ -24,14 +24,14 @@ const simulateBudget = async (
   data: budgetRequest,
 ): Promise<{
   data: calcBudget;
-}> => api.post('/budget/simulate', data);
+}> => await api.post('/budget/simulate', data);
 
 const saveBudget = async (data: budgetRequest) =>
-  api.post('/budget/create', data);
+  await api.post('/budget/create', data);
 
 const getList = async (): Promise<{
   data: Budget[];
-}> => api.get('/budget/list');
+}> => await api.get('/budget/list');
 
 const renderPrice = (total: number) =>
   (total / 100).toFixed(2).replace('.', ',');

@@ -1,13 +1,13 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import {Modal, SafeAreaView} from 'react-native';
+import {Modal, SafeAreaView, View} from 'react-native';
 import {
   Content,
   CustomButton,
   Input,
   Label,
   TextBtn,
-  WrapperInput,
+  InputWrapper,
 } from '../../components/core/core.styled';
 import ProfesionalService from '../../services/ProfesionalService';
 import BudgetService, {
@@ -16,6 +16,7 @@ import BudgetService, {
 } from '../../services/BudgetService';
 import {ModalView, TitleModal, TotalText} from './style';
 import {NavigationProp} from '@react-navigation/native';
+import FlashErrors from '../../components/FlashErrors';
 
 type ProfessionalState = {
   [key: string]: {
@@ -36,6 +37,7 @@ type ModalState = {
 
 const NewBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
   const [professionals, setProfessionals] = useState([]);
+  const [errors, setErrors] = useState<string[]>([]);
   const [budgetResult, setBudgetResult] = useState<ModalState>({
     showModal: false,
     total: '0',
@@ -70,12 +72,12 @@ const NewBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
       const result = await BudgetService.simulateBudget(getData());
       setBudgetResult({
         ...budgetResult,
-        total: result.data.total,
+        total: result.data?.total,
         showModal: true,
       });
     } catch (_error) {
       // TODO: handle Errors
-      // console.log(_error.response.data.message);
+      setErrors(_error.response?.data?.message);
     }
   };
 
@@ -107,30 +109,32 @@ const NewBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
           <ModalView>
             <TitleModal>Total do seu orçamento:</TitleModal>
             <TotalText>R$ {budgetResult.total}</TotalText>
-            <WrapperInput>
+            <InputWrapper>
               <CustomButton onPress={saveBudget}>
                 <TextBtn>Confirmar Orçamento</TextBtn>
               </CustomButton>
-              <CustomButton type="danger" onPress={closeModal}>
+              <CustomButton typeButton="danger" onPress={closeModal}>
                 <TextBtn>Fechar</TextBtn>
               </CustomButton>
-            </WrapperInput>
+            </InputWrapper>
           </ModalView>
         </Modal>
         {professionals.map((profesional: any, i: number) => (
-          <WrapperInput key={i}>
+          <InputWrapper key={i}>
             <Label>{profesional.name}</Label>
             <Input
+              keyboardType="numeric"
               placeholder={profesional.name}
               onChangeText={(amount: string) =>
                 changeValueByProfessional(profesional, amount)
               }
             />
-          </WrapperInput>
+          </InputWrapper>
         ))}
-        <WrapperInput>
+        <InputWrapper>
           <Label>Quantidade de dias</Label>
           <Input
+            keyboardType="numeric"
             onChangeText={(amount: string) =>
               setDataBudget({
                 ...dataBudget,
@@ -138,12 +142,13 @@ const NewBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
               })
             }
           />
-        </WrapperInput>
-        <WrapperInput>
+        </InputWrapper>
+        <FlashErrors errors={errors} />
+        <InputWrapper>
           <CustomButton onPress={simulateBudget}>
             <TextBtn>Simular</TextBtn>
           </CustomButton>
-        </WrapperInput>
+        </InputWrapper>
       </Content>
     </SafeAreaView>
   );

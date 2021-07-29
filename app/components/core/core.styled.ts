@@ -21,8 +21,10 @@ export const Content = styled.View`
 export const CustomButton = styled.Pressable`
   width: 100%;
   border-radius: 5px;
-  background-color: ${({type}) =>
-    !type || type === 'primary' ? Colors.successColor : Colors.dangerColor};
+  background-color: ${({typeButton}: {typeButton?: string}) =>
+    !typeButton || typeButton === 'primary'
+      ? Colors.successColor
+      : Colors.dangerColor};
   padding: 10px 20px;
   justify-content: center;
   align-items: center;
@@ -37,12 +39,23 @@ export const TextBtn = styled.Text`
   text-transform: uppercase;
 `;
 
-export const WrapperInput = styled.View`
+export const InputWrapper = styled.View`
   padding: 10px;
   flex-direction: column;
 `;
 
 export const Label = styled.Text`
   margin-bottom: 10px;
+  font-weight: 900;
+`;
+
+export const ErrorWrapper = styled.View`
+  margin: 10px;
+  padding: 10px;
+`;
+
+export const ErrorText = styled.Text`
+  color: ${Colors.dangerColor};
+  text-transform: capitalize;
   font-weight: 900;
 `;
