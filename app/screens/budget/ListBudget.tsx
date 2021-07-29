@@ -33,7 +33,8 @@ const ListBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
   };
 
   useEffect(() => {
-    setTimeout(() => getBudgets(), 1000);
+    getBudgets();
+    return () => setBudgets([]);
   }, []);
 
   return (

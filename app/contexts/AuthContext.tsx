@@ -26,6 +26,7 @@ const AuthProvider: React.FC = ({children}) => {
   useEffect(() => {
     loadStorageData();
     interceptorUnauthorized(signOut);
+    return () => setLoading(false);
   }, []);
 
   async function loadStorageData(): Promise<void> {
