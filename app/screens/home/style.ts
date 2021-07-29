@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import Colors from '../../components/core/colors';
 
 export const StatusLabel = styled.Text`
