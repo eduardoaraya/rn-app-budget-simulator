@@ -22,6 +22,7 @@ const RenderField = ({
           <InputWrapper style={{flex: 1}} key={i}>
             <Label>{child.title}</Label>
             <Input
+              secureTextEntry={!!child.secureTextEntry}
               onChangeText={value => {
                 onChangeValue({
                   ...profileData,
@@ -43,6 +44,7 @@ const RenderField = ({
       <InputWrapper>
         <Label>{item.title}</Label>
         <Input
+          secureTextEntry={!!item.secureTextEntry}
           onChangeText={value => {
             onChangeValue({
               ...profileData,

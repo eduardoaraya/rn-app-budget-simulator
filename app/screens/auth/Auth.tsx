@@ -20,13 +20,20 @@ const Auth = ({navigation}: {navigation: NavigationProp<any>}) => {
   const authenticate = async () => {
     isLoading(true);
     try {
+      if (!email || !password) {
+        return;
+      }
       await auth.signIn({email, password});
-      navigation.navigate('Home');
+      setTimeout(() => navigation.navigate('Home'), 1000);
     } catch (_error) {
       Alert.alert(_error.response.data.message);
     } finally {
       isLoading(false);
     }
+  };
+
+  const register = async () => {
+    navigation.navigate('Register');
   };
 
   return (
@@ -52,6 +59,9 @@ const Auth = ({navigation}: {navigation: NavigationProp<any>}) => {
             <InputWrapper>
               <CustomButton onPress={() => authenticate()}>
                 <TextBtn>Entrar</TextBtn>
+              </CustomButton>
+              <CustomButton onPress={() => register()}>
+                <TextBtn>Registre-se</TextBtn>
               </CustomButton>
             </InputWrapper>
           </>

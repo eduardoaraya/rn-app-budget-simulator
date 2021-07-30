@@ -14,6 +14,7 @@ type AuthContextData = {
   loading: boolean;
   signIn({email, password}: {email: string; password: string}): Promise<void>;
   signOut(): void;
+  setDataAuthentication(token: string): Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -47,6 +48,14 @@ const AuthProvider = ({children}) => {
     }
   }
 
+  const setDataAuthentication = async (token: string) => {
+    const data = jwt_decode<UserType>(token);
+    await AsyncStorage.setItem(AUTH_STORAGE, token);
+    await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(data));
+    setAuthData(token);
+    await setClientToken(token);
+  };
+
   const signIn = async ({
     email,
     password,
@@ -56,16 +65,19 @@ const AuthProvider = ({children}) => {
   }) => {
     const token = await AuthService(email, password);
     if (token) {
-      const data = jwt_decode<UserType>(token);
-      await AsyncStorage.setItem(AUTH_STORAGE, token);
-      await AsyncStorage.setItem(USER_STORAGE, JSON.stringify(data));
-      setAuthData(token);
-      setClientToken(token);
+      setDataAuthentication(token);
     }
   };
 
   return (
-    <AuthContext.Provider value={{authData, loading, signIn, signOut}}>
+    <AuthContext.Provider
+      value={{
+        authData,
+        loading,
+        signIn,
+        signOut,
+        setDataAuthentication,
+      }}>
       {children}
     </AuthContext.Provider>
   );

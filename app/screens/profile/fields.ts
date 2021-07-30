@@ -1,9 +1,15 @@
 import {UserType} from '../../shared/UserType';
 
 export type FieldProfile = {
-  field?: keyof UserType;
+  field?:
+    | keyof UserType
+    | keyof {
+        password?: string;
+        passwordConfirmation?: string;
+      };
   title?: string;
   fields?: FieldProfile[];
+  secureTextEntry?: boolean;
 };
 
 export const ProfileFields: FieldProfile[] = [
@@ -76,6 +82,24 @@ export const ProfileFields: FieldProfile[] = [
       {
         field: 'addressState',
         title: 'Estado',
+      },
+    ],
+  },
+];
+
+export const RegisterFields: FieldProfile[] = [
+  ...ProfileFields,
+  {
+    fields: [
+      {
+        field: 'password',
+        title: 'Senha',
+        secureTextEntry: true,
+      },
+      {
+        field: 'passwordConfirmation',
+        title: 'Confirmação de senha',
+        secureTextEntry: true,
       },
     ],
   },

@@ -4,15 +4,17 @@ import ListBudget from '../budget/ListBudget';
 import Profile from '../profile/Profile';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../../components/core/colors';
+import Logout from '../auth/Logout';
 
 const Tab = createBottomTabNavigator();
 
 const TabIcons = {
   List: 'list',
   Profile: 'cog',
+  Logout: 'sign-out-alt',
 };
 
-const Home = ({signOut}) => {
+const Home = ({navigation}) => {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -37,6 +39,13 @@ const Home = ({signOut}) => {
           title: '',
         }}
         component={Profile}
+      />
+      <Tab.Screen
+        name="Logout"
+        options={{
+          title: '',
+        }}
+        component={Logout}
       />
     </Tab.Navigator>
   );

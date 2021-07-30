@@ -76,7 +76,6 @@ const NewBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
         showModal: true,
       });
     } catch (_error) {
-      // TODO: handle Errors
       setErrors(_error.response?.data?.message);
     }
   };
@@ -94,8 +93,8 @@ const NewBudget = ({navigation}: {navigation: NavigationProp<any>}) => {
       closeModal();
       navigation.navigate('Home');
     } catch (_error) {
-      // TODO: handle Errors
-      // console.log(_error.response.data.message);
+      setErrors(_error.response?.data?.message);
+      closeModal();
     }
   };
 

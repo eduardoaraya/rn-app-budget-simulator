@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Auth from '../screens/auth/Auth';
-import Home from '../screens/home/Home';
+import Register from '../screens/register/Register';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +14,13 @@ export const AuthStack = () => {
           title: '',
         }}
         component={Auth}
+      />
+      <Stack.Screen
+        name="Register"
+        options={{
+          title: '',
+        }}
+        component={Register}
       />
     </Stack.Navigator>
   );
